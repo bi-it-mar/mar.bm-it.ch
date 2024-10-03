@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color:rgba(5, 168, 250, 0.356);
+    color: #333;
+    margin: 0 auto;
+    padding: 0;
+    position:relative;
+}
+
+.Foto{
+    width: 50vw;
+}
+
+html{
+    top: 0;
+}
+
+header{
+    margin: 0 auto;
+}
+h1 {
+    font-size: 48px;
+    color: #333;
+    width:90%;
+    margin: 0 auto;
+    position:relative;
+}
+p {
+    font-size: 24px;
+    position:relative;
+}
+
+.top-left {
+position: absolute;
+top: 0px;
+margin: 0 auto;
+font-size: 24px;
+width:90%;
+text-align: left;
+}
+
+.container{
+    height: 200px;
+    background-color: rgb(214, 17, 254);
+    align-items: top, center;
+    top: 0;
+    width:90%;
+    margin: 0 auto;
+
+}
+
+.container2{
+    height: 300px;
+    background-color: rgb(214, 17, 254);
+    align-items: top;
+    top: 0;  
+    margin: 0 auto;
+    width:90%;
+}
+
+.container3{
+    height: 300px;
+    background-color: rgb(214, 17, 254);
+    align-items: top;
+    top: 0;   
+    margin: 0 auto;
+    width:90%;
+}
+
+.birthdate{
+    top: 25px;
+    left: 400px;
+
+}
+
+.quote{
+    top: 5px;
+    left: 400px;
+}
+
+.owner{
+    top: 1px;
+    left: 600px;
+}
+
+.hyperlink_induction{
+    top: 0px;
+    left: 550px;
+}
+
+
+
+
