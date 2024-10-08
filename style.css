@@ -7,10 +7,6 @@ body {
     position:relative;
 }
 
-.Foto{
-    width: 50vw;
-}
-
 html{
     top: 0;
 }
@@ -21,7 +17,6 @@ header{
 h1 {
     font-size: 48px;
     color: #333;
-    width:90%;
     margin: 0 auto;
     position:relative;
 }
@@ -40,7 +35,7 @@ text-align: left;
 }
 
 .container{
-    height: 200px;
+    height: 300px;
     background-color: rgb(214, 17, 254);
     align-items: top, center;
     top: 0;
@@ -50,7 +45,7 @@ text-align: left;
 }
 
 .container2{
-    height: 300px;
+    height: 500px;
     background-color: rgb(214, 17, 254);
     align-items: top;
     top: 0;  
@@ -59,7 +54,7 @@ text-align: left;
 }
 
 .container3{
-    height: 300px;
+    height: 550px;
     background-color: rgb(214, 17, 254);
     align-items: top;
     top: 0;   
@@ -88,6 +83,34 @@ text-align: left;
     left: 550px;
 }
 
+.foto img {
+    width: 5%;
+    height: auto;
+    position: absolute; 
+    top: 5vh; 
+    left: 17.2vw;
+}
 
+.abschnitt2 {
+    position: relative;
+    text-align: left;
+    justify-content: left;
+    align-items: left;
+    font-size: 25px;
+}
 
+.text2 {
+    font-size: 19px;
+    max-width: 800px;
+}
+
+.antwort {
+    max-width: 800px;
+}
+
+.butterfly {
+    position: relative;
+    text-align: center;
+    max-width: 500px;
+}
 
