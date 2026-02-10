@@ -225,6 +225,14 @@ h3 {
 .book-img {
     width: 70%;
     height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.book-img:hover {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 8px 24px rgba(55, 158, 255, 0.25);
+    z-index: 2;
 }
 
 .div3-right {
