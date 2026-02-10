@@ -657,11 +657,19 @@ h3 {
         color: white;
         margin-bottom: 20px;
     }
-    
+
     .book-img {
         width: 70%;
+        transition: transform 0.3s ease, filter 0.3s ease; /* Weicher Übergang für Zoom UND Farbe */
+        cursor: pointer; /* Zeigt dem Nutzer: Hier kann man interagieren */
     }
-    
+
+        /* Der Effekt beim Drüberfahren (Hover) */
+    .book-img:hover {
+        transform: scale(1.05); /* Dezenter Zoom (5%) */
+        filter: sepia(50%) brightness(1.1); /* Retro-Look + leichte Aufhellung */
+        }
+
     .div3-right {
         transform: translateX(0);
         color: white;
