@@ -290,6 +290,15 @@ h3 {
     filter: sepia(50%);
 }
 
+.butterfly-img[src="butterfly.PNG"] {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.butterfly-img[src="butterfly.PNG"]:hover {
+    transform: scale(1.1);
+    filter: sepia(50%);
+}
+
 @media screen and (max-width: 1440px) {
     header {
         width: 90%;
