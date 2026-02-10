@@ -223,7 +223,7 @@ h3 {
 }
 
 .book-img {
-    width: 300px;
+    width: 100px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
