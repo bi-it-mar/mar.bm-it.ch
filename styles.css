@@ -666,7 +666,7 @@ h3 {
 
         /* Der Effekt beim Drüberfahren (Hover) */
     .book-img:hover {
-        transform: scale(1.05); /* Dezenter Zoom (5%) */
+        transform: scale(1.20); /* Dezenter Zoom (5%) */
         filter: sepia(50%) brightness(1.1); /* Retro-Look + leichte Aufhellung */
         }
 
