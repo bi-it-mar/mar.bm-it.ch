@@ -104,28 +104,20 @@ h1 {
 }
 
 .scale-img {
-    position: relative;
     width: 50%;
-    height: 200px;
+    height: auto;
     margin-bottom: 15px;
     margin-left: 10px;
-    margin-right: 20px; /* Reduce margin to avoid pushing selfie-img too far */
+    margin-right: 60px;
     object-fit: cover;
     display: block;
 }
 
-.selfie-img {
-    width: 20%;
-    margin-top: 25px;
-    margin-left: 10px;
-    transition: opacity 0.3s ease;
-}
-
 #toggle-selfie {
     width: 20%;
-    height: 200px;
+    height: auto;
     margin-top: 25px;
-    margin-left: 0; /* Remove left margin for tighter alignment */
+    margin-left: 10px;
     transition: opacity 0.3s ease;
     object-fit: cover;
     display: block;
