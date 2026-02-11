@@ -116,6 +116,15 @@ h1 {
     transition: opacity 0.3s ease;
 }
 
+#toggle-selfie {
+    width: 20%;
+    height: auto;
+    margin-top: 25px;
+    margin-left: 10px;
+    transition: opacity 0.3s ease;
+    object-fit: cover;
+}
+
 .peace-img {
     position: relative;
     width: 35%;
