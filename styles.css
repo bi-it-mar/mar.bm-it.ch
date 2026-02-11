@@ -99,6 +99,8 @@ h1 {
 
 .section-left {
     width: 50%;
+    display: flex;
+    align-items: flex-start;
 }
 
 .scale-img {
@@ -107,7 +109,7 @@ h1 {
     height: 200px;
     margin-bottom: 15px;
     margin-left: 10px;
-    margin-right: 60px;
+    margin-right: 20px; /* Reduce margin to avoid pushing selfie-img too far */
     object-fit: cover;
     display: block;
 }
@@ -123,7 +125,7 @@ h1 {
     width: 20%;
     height: 200px;
     margin-top: 25px;
-    margin-left: 10px;
+    margin-left: 0; /* Remove left margin for tighter alignment */
     transition: opacity 0.3s ease;
     object-fit: cover;
     display: block;
