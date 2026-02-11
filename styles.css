@@ -9,6 +9,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Header: positionieren, damit der Button oben-rechts absolut sitzen kann */
 header {
     display: flex;
     background-color: #1c283a;
@@ -19,6 +20,7 @@ header {
     width: 85%;
     height: auto;
     margin: 0 auto;
+    position: relative; /* hinzugefügt */
 }
 
 section {
@@ -361,13 +363,12 @@ h3 {
     pointer-events: none; /* Zeichnung blockiert keine Eingaben; Klicks landen auf Overlay element */
 }
 
-/* Controls (Button) innerhalb des Container */
-.matrix-controls {
-    position: relative;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
+/* Controls (Button) innerhalb des Header oben rechts */
+.header-rain {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 11000;
     pointer-events: auto;
 }
 
@@ -384,7 +385,7 @@ h3 {
     background-color: #095419;
 }
 
-/* Kleinere Höhe auf kleinen Bildschirmen */
+/* Kleinere Höhe / Button-Anpassung auf kleinen Bildschirmen */
 @media screen and (max-width: 768px) {
     .matrix-container {
         height: 160px;
@@ -399,6 +400,12 @@ h3 {
     .rain-button {
         padding: 8px 12px;
         font-size: 0.95rem;
+    }
+
+    /* Auf sehr kleinen Displays Button etwas nach innen schieben */
+    .header-rain {
+        top: 8px;
+        right: 8px;
     }
 }
 
