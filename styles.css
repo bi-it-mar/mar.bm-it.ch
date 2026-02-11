@@ -288,6 +288,27 @@ h3 {
     filter: sepia(50%);
 }
 
+.download-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.download-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.download-button:hover {
+    background-color: #388e3c;
+}
+
 @media screen and (max-width: 1440px) {
     header {
         width: 90%;
