@@ -75,3 +75,18 @@ document.querySelector('input[name="search"]').addEventListener('keydown', funct
         clearHighlights(); // Remove any highlights
     }
 });
+
+const selfieImg = document.getElementById('toggle-selfie');
+let isSelfie = true;
+
+function toggleImage() {
+    selfieImg.style.opacity = 0;
+    setTimeout(() => {
+        selfieImg.src = isSelfie ? 'unknown_person.jpg' : 'selfie.PNG';
+        selfieImg.style.opacity = 1;
+        isSelfie = !isSelfie;
+    }, 300);
+}
+
+selfieImg.addEventListener('mouseenter', toggleImage);
+selfieImg.addEventListener('mouseleave', toggleImage);
