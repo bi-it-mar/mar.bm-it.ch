@@ -104,9 +104,12 @@ h1 {
 .scale-img {
     position: relative;
     width: 50%;
+    height: 200px;
     margin-bottom: 15px;
     margin-left: 10px;
     margin-right: 60px;
+    object-fit: cover;
+    display: block;
 }
 
 .selfie-img {
@@ -118,11 +121,12 @@ h1 {
 
 #toggle-selfie {
     width: 20%;
-    height: auto;
+    height: 200px;
     margin-top: 25px;
     margin-left: 10px;
     transition: opacity 0.3s ease;
     object-fit: cover;
+    display: block;
 }
 
 .peace-img {
