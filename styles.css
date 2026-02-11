@@ -855,23 +855,27 @@ h3 {
     }
 }
 
+/* Mobile: Button fixed oben-rechts, Overlay touch-friendly */
 @media screen and (max-width: 480px) {
-    header {
-        text-align: center;
+    .header-rain {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 11001;
     }
 
-    img.selfie-img {
-        width: 60%;
-        margin: 0;
-        margin-top: 20px;
+    /* Optional: etwas größeres, gut erreichbares Touch-Target */
+    .rain-button {
+        padding: 10px 14px;
+        font-size: 0.95rem;
     }
 
-    img.scale-img {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    p.data {
-        margin: 0;
+    /* Overlay touch handling (sicherstellen) */
+    .matrix-overlay {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
     }
 }

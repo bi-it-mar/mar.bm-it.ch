@@ -91,7 +91,7 @@ function toggleImage() {
 selfieImg.addEventListener('mouseenter', toggleImage);
 selfieImg.addEventListener('mouseleave', toggleImage);
 
-/* --- Fullscreen Matrix / Regenschauer Implementation --- */
+/* --- Fullscreen Matrix / Regenschauer Implementation (mobil-optimiert) --- */
 (function() {
     const overlay = document.getElementById('matrix-overlay');
     const canvas = document.getElementById('matrix-overlay-canvas');
@@ -103,11 +103,16 @@ selfieImg.addEventListener('mouseleave', toggleImage);
     let animationId = null;
     let running = false;
 
-    // Settings
-    const fontSize = 16;
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()-+=';
+    // dynamische Einstellungen (werden in resizeCanvasFull gesetzt)
+    let fontSize = 16;
+    let characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()-+=';
     let columns = 0;
     let drops = [];
+
+    // FPS-Drossel für mobile
+    const TARGET_FPS = 30;
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+    let lastFrameTime = 0;
 
     function resizeCanvasFull() {
         const ratio = window.devicePixelRatio || 1;
@@ -120,20 +125,43 @@ selfieImg.addEventListener('mouseleave', toggleImage);
         canvas.width = Math.floor(width * ratio);
         canvas.height = Math.floor(height * ratio);
 
-        // Reset transform then scale
+        // Reset transform then scale for high DPI
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(ratio, ratio);
+
+        // mobile-friendly font size and character set
+        if (width <= 480) {
+            fontSize = 12; // kleiner auf Handys
+            // weniger und klarere Zeichen für bessere Lesbarkeit & Performance
+            characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        } else if (width <= 768) {
+            fontSize = 14;
+            characters = '0123456789abcdefghijklmnopqrstuvwxyz@#';
+        } else {
+            fontSize = 16;
+            characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()-+=';
+        }
 
         columns = Math.floor(width / fontSize) + 1;
         drops = new Array(columns).fill(1);
     }
 
-    function drawFrame() {
+    function drawFrame(time) {
+        // time ist vom requestAnimationFrame
+        if (!lastFrameTime) lastFrameTime = time;
+        const delta = time - lastFrameTime;
+        if (delta < FRAME_INTERVAL) {
+            animationId = requestAnimationFrame(drawFrame);
+            return;
+        }
+        lastFrameTime = time;
+
         const width = window.innerWidth;
         const height = window.innerHeight;
 
-        // slight translucent black to create trail effect
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        // Trail-Effekt: auf mobilen Geräten etwas stärker decken, um weniger Spuren zu haben
+        const alpha = (width <= 480) ? 0.12 : 0.06;
+        ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = '#00FF41';
@@ -149,7 +177,6 @@ selfieImg.addEventListener('mouseleave', toggleImage);
             if (y > height && Math.random() > 0.975) {
                 drops[i] = 0;
             }
-
             drops[i]++;
         }
 
@@ -161,9 +188,12 @@ selfieImg.addEventListener('mouseleave', toggleImage);
         resizeCanvasFull();
         overlay.classList.add('active');
         overlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden'; // disable scroll while overlay active
+
+        // mobile: Verhindere Scrollen, aber nur wenn Overlay sichtbar
+        document.body.style.overflow = 'hidden';
         toggleBtn.textContent = 'Stop Regenschauer';
         running = true;
+        lastFrameTime = 0;
         animationId = requestAnimationFrame(drawFrame);
     }
 
@@ -178,29 +208,33 @@ selfieImg.addEventListener('mouseleave', toggleImage);
             cancelAnimationFrame(animationId);
             animationId = null;
         }
-        // clear canvas
         ctx.setTransform(1,0,0,1,0,0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    toggleBtn.addEventListener('click', function() {
+    toggleBtn.addEventListener('click', function(event) {
+        event.stopPropagation();
         if (running) stopRain();
         else startRain();
     });
 
-    // Stop when user presses Escape
-    window.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && running) {
-            stopRain();
-        }
-    });
+    // Touch: Tap Overlay zum Stoppen (verhindert versehentliches Scrollen)
+    overlay.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Overlay-interaktion — tap beendet Regen
+        if (running) stopRain();
+    }, { passive: false });
 
-    // Allow clicking on overlay to stop rain
-    overlay.addEventListener('click', function() {
+    // Klick auf Overlay auch stoppen
+    overlay.addEventListener('click', function(e) {
         if (running) stopRain();
     });
 
-    // Resize handling while running
+    // Escape darf stoppen
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && running) stopRain();
+    });
+
+    // Bei OrientationChange / Resize neu berechnen
     let resizeTimer = null;
     window.addEventListener('resize', function() {
         if (!running) return;
@@ -209,11 +243,14 @@ selfieImg.addEventListener('mouseleave', toggleImage);
             resizeCanvasFull();
         }, 150);
     });
-
-    // Stop rain when tab hidden to save CPU
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden && running) {
-            stopRain();
-        }
+    window.addEventListener('orientationchange', function() {
+        if (!running) return;
+        setTimeout(resizeCanvasFull, 200);
     });
+
+    // Tab versteckt -> Stoppen zur CPU-/Battery-Ersparnis
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden && running) stopRain();
+    });
+
 })();
