@@ -253,4 +253,14 @@ selfieImg.addEventListener('mouseleave', toggleImage);
         if (document.hidden && running) stopRain();
     });
 
+    toggleBtn.addEventListener('touchend', function(event) {
+        // Mobile: verhindere Doppelauslösung (touch + click)
+        event.preventDefault();
+        event.stopPropagation();
+        // optional: Debug-Ausgabe, entferne später wieder
+        console.log('rain-toggle touchend (mobile)');
+        if (running) stopRain();
+        else startRain();
+    }, { passive: false });
+
 })();

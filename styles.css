@@ -365,10 +365,10 @@ h3 {
 
 /* Controls (Button) innerhalb des Header oben rechts */
 .header-rain {
-    position: absolute;
+    position: fixed; /* fixed statt absolute, damit immer in der Viewport-Ecke */
     top: 12px;
     right: 12px;
-    z-index: 11000;
+    z-index: 11001; /* höher als Overlay (10000) */
     pointer-events: auto;
 }
 
