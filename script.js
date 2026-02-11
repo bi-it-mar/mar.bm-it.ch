@@ -90,3 +90,112 @@ function toggleImage() {
 
 selfieImg.addEventListener('mouseenter', toggleImage);
 selfieImg.addEventListener('mouseleave', toggleImage);
+
+/* --- Matrix / Regenschauer Implementation --- */
+(function() {
+    const canvas = document.getElementById('matrix-canvas');
+    const container = document.getElementById('matrix-container');
+    const toggleBtn = document.getElementById('rain-toggle');
+
+    if (!canvas || !container || !toggleBtn) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationId = null;
+    let running = false;
+
+    // Settings
+    const fontSize = 14;
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()*&^%';
+    let columns = 0;
+    let drops = [];
+
+    function resizeCanvas() {
+        const ratio = window.devicePixelRatio || 1;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+
+        canvas.width = Math.floor(width * ratio);
+        canvas.height = Math.floor(height * ratio);
+
+        ctx.scale(ratio, ratio);
+
+        columns = Math.floor(width / fontSize);
+        drops = new Array(columns).fill(1);
+    }
+
+    function draw() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        // slight transparent black to create trail effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#00FF41';
+        ctx.font = `${fontSize}px monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
+
+            ctx.fillText(text, x, y);
+
+            if (y > height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+
+        animationId = requestAnimationFrame(draw);
+    }
+
+    function startRain() {
+        if (running) return;
+        resizeCanvas();
+        running = true;
+        container.setAttribute('aria-hidden', 'false');
+        toggleBtn.textContent = 'Stop Regenschauer';
+        animationId = requestAnimationFrame(draw);
+    }
+
+    function stopRain() {
+        running = false;
+        container.setAttribute('aria-hidden', 'true');
+        toggleBtn.textContent = 'Regenschauer';
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+        // clear canvas when stopped
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    toggleBtn.addEventListener('click', function() {
+        if (running) stopRain();
+        else startRain();
+    });
+
+    // Responsive
+    let resizeTimer = null;
+    window.addEventListener('resize', function() {
+        if (!running) return;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            // reset canvas scaling and arrays
+            ctx.setTransform(1,0,0,1,0,0);
+            resizeCanvas();
+        }, 150);
+    });
+
+    // Optional: stop rain when navigating away to avoid background CPU usage
+    window.addEventListener('visibilitychange', function() {
+        if (document.hidden && running) {
+            stopRain();
+        }
+    });
+})();
