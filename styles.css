@@ -117,13 +117,12 @@ h1 {
 }
 
 #toggle-selfie {
-    width: 200px;
-    height: 200px;
+    width: 20%;
+    height: auto;
     margin-top: 25px;
     margin-left: 10px;
     transition: opacity 0.3s ease;
     object-fit: cover;
-    display: block;
 }
 
 .peace-img {
