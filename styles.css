@@ -322,8 +322,7 @@ h3 {
 .matrix-container {
     position: relative;
     width: 100%;
-    height: 220px; /* Standardhöhe, responsive Anpassung weiter unten */
-    overflow: hidden;
+    overflow: visible;
     margin: 20px 0 40px 0;
     background: transparent;
 }
@@ -336,14 +335,40 @@ h3 {
     pointer-events: none; /* Canvas nicht blockierend für Klicks auf Button */
 }
 
-/* Controls (Button) innerhalb des Containers */
+/* Fullscreen Overlay */
+.matrix-overlay {
+    display: none; /* sichtbar wenn active */
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #000;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.matrix-overlay.active {
+    display: block;
+}
+
+/* Canvas für Fullscreen */
+#matrix-overlay-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    pointer-events: none; /* Zeichnung blockiert keine Eingaben; Klicks landen auf Overlay element */
+}
+
+/* Controls (Button) innerhalb des Container */
 .matrix-controls {
-    position: absolute;
-    bottom: 12px;
+    position: relative;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
-    pointer-events: auto; /* Button soll klickbar bleiben */
+    pointer-events: auto;
 }
 
 /* Reuse download-button style, aber etwas angepasst für Regen */

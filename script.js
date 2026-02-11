@@ -91,28 +91,28 @@ function toggleImage() {
 selfieImg.addEventListener('mouseenter', toggleImage);
 selfieImg.addEventListener('mouseleave', toggleImage);
 
-/* --- Matrix / Regenschauer Implementation --- */
+/* --- Fullscreen Matrix / Regenschauer Implementation --- */
 (function() {
-    const canvas = document.getElementById('matrix-canvas');
-    const container = document.getElementById('matrix-container');
+    const overlay = document.getElementById('matrix-overlay');
+    const canvas = document.getElementById('matrix-overlay-canvas');
     const toggleBtn = document.getElementById('rain-toggle');
 
-    if (!canvas || !container || !toggleBtn) return;
+    if (!overlay || !canvas || !toggleBtn) return;
 
     const ctx = canvas.getContext('2d');
     let animationId = null;
     let running = false;
 
     // Settings
-    const fontSize = 14;
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()*&^%';
+    const fontSize = 16;
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()-+=';
     let columns = 0;
     let drops = [];
 
-    function resizeCanvas() {
+    function resizeCanvasFull() {
         const ratio = window.devicePixelRatio || 1;
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
         canvas.style.width = width + 'px';
         canvas.style.height = height + 'px';
@@ -120,18 +120,20 @@ selfieImg.addEventListener('mouseleave', toggleImage);
         canvas.width = Math.floor(width * ratio);
         canvas.height = Math.floor(height * ratio);
 
+        // Reset transform then scale
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(ratio, ratio);
 
-        columns = Math.floor(width / fontSize);
+        columns = Math.floor(width / fontSize) + 1;
         drops = new Array(columns).fill(1);
     }
 
-    function draw() {
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
+    function drawFrame() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-        // slight transparent black to create trail effect
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        // slight translucent black to create trail effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = '#00FF41';
@@ -151,27 +153,33 @@ selfieImg.addEventListener('mouseleave', toggleImage);
             drops[i]++;
         }
 
-        animationId = requestAnimationFrame(draw);
+        animationId = requestAnimationFrame(drawFrame);
     }
 
     function startRain() {
         if (running) return;
-        resizeCanvas();
-        running = true;
-        container.setAttribute('aria-hidden', 'false');
+        resizeCanvasFull();
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // disable scroll while overlay active
         toggleBtn.textContent = 'Stop Regenschauer';
-        animationId = requestAnimationFrame(draw);
+        running = true;
+        animationId = requestAnimationFrame(drawFrame);
     }
 
     function stopRain() {
+        if (!running) return;
         running = false;
-        container.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // restore scrolling
         toggleBtn.textContent = 'Regenschauer';
         if (animationId) {
             cancelAnimationFrame(animationId);
             animationId = null;
         }
-        // clear canvas when stopped
+        // clear canvas
+        ctx.setTransform(1,0,0,1,0,0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -180,20 +188,30 @@ selfieImg.addEventListener('mouseleave', toggleImage);
         else startRain();
     });
 
-    // Responsive
+    // Stop when user presses Escape
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && running) {
+            stopRain();
+        }
+    });
+
+    // Allow clicking on overlay to stop rain
+    overlay.addEventListener('click', function() {
+        if (running) stopRain();
+    });
+
+    // Resize handling while running
     let resizeTimer = null;
     window.addEventListener('resize', function() {
         if (!running) return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            // reset canvas scaling and arrays
-            ctx.setTransform(1,0,0,1,0,0);
-            resizeCanvas();
+            resizeCanvasFull();
         }, 150);
     });
 
-    // Optional: stop rain when navigating away to avoid background CPU usage
-    window.addEventListener('visibilitychange', function() {
+    // Stop rain when tab hidden to save CPU
+    document.addEventListener('visibilitychange', function() {
         if (document.hidden && running) {
             stopRain();
         }
