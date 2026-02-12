@@ -35,6 +35,11 @@
                 <button class="input-button" type="submit">Suchen</button>
             </form>
         </div>
+
+        <!-- Regenschauer-Button oben rechts -->
+        <div class="header-rain" aria-hidden="false">
+            <button id="rain-toggle" class="download-button rain-button" type="button" aria-pressed="false">Regenschauer</button>
+        </div>
     </header>
 
     <hr>
@@ -165,6 +170,11 @@
     <a href="C:\Users\luca.martusciello\source\repos\bi-it-mar\mar.bm-it.ch\Memory_Spiel.zip" download class="download-button">
         Memory_Spiel.exe herunterladen
     </a>
+</div>
+
+<!-- Fullscreen Matrix Overlay (wird beim Start sichtbar) -->
+<div id="matrix-overlay" class="matrix-overlay" aria-hidden="true" tabindex="-1">
+    <canvas id="matrix-overlay-canvas"></canvas>
 </div>
 
     <script src="script.js"></script>
