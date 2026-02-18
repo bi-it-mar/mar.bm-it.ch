@@ -32,7 +32,23 @@ Hier stehen Informationen zu meinem Lieblingsbuch "PSYCHOPATHEN" vom Autor Kevin
 Hier stehen Informationen zum Thema "Sozialisation" und der Kausalität von Emotionen und Verhalten, welche ich mit meinen Gedanken begründe.
 
 ### Reflexion
+- Was war das Ziel der Webseite?
+Das Ziel war, eine Webseite zu programmieren welche einen tiefen Einblick in meine Psyche erlaubt und veranschaulichen soll mit wem man es bei mir zu tun hat.
 
+- Was hat gut funktioniert?
+Ich hatte relativ schnell Ideen dazu, wie die Webseite ungefähr aussehen soll und welchen Inhalt sie haben soll.
+
+- Was war schwierig / Probleme?
+Das Programmieren war anfangs sehr schwer, ich denke wegen meiner mangelden Erfahrung bezüglich dem Programmieren an sich.
+Vorallem das formatieren der Webseite empfand ich als sehr schwer, wenn ich manchmal Bilder neu hinzugefügt oder die Position geändert habe, hat sich die Position anderer Inhalte verschoben.
+
+- Was habe ich gelernt?
+Ich habe gelernt, wie ich mit GitHub arbeite und den GitHub Copilot nutzen kann um meine Webseite effizient anzupassen.
+
+- Was würde ich nächstes Mal besser machen?
+Ich würde 
+
+- Welche Verbesserungen wären möglich?
 
 ###### Hyperlink
 Link zu der Webseite: https://mar.bm-it.ch/
