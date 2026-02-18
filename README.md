@@ -29,9 +29,10 @@ Hier stehen Informationen zu meinem Lieblingsbuch "PSYCHOPATHEN" vom Autor Kevin
 
 
 ## 4. Abschnitt
+Hier stehen Informationen zum Thema "Sozialisation" und der Kausalität von Emotionen und Verhalten, welche ich mit meinen Gedanken begründe.
 
+### Reflexion
 
-##### Reflexion
 
 ###### Hyperlink
 Link zu der Webseite: https://mar.bm-it.ch/
